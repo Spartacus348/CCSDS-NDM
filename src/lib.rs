@@ -8,14 +8,16 @@ extern crate uom;
 use std::iter::Map;
 
 use chrono::{DateTime, Utc};
-use uom::si::angle::degree;
-use uom::si::area::{square_kilometer, square_meter};
-use uom::si::length::kilometer;
-use uom::si::mass::kilogram;
-use uom::si::specific_area::square_meter_per_kilogram;
-use uom::si::time::second;
-use uom::si::velocity::kilometer_per_second;
-use constants::{LocalReferenceFrame, ReferenceFrame};
+use uom::si::{angle::degree,
+              area::{square_kilometer,
+                     square_meter},
+              length::kilometer,
+              mass::kilogram,
+              specific_area::square_meter_per_kilogram,
+              time::second,
+              velocity::kilometer_per_second,
+              Quantity as Q};
+use constants::{LocalReferenceFrame, ReferenceFrame, NaturalBody};
 
 mod constants;
 
@@ -25,7 +27,7 @@ mod gm {
         quantity: GM; "gravitational parameter";
         dimension: Q<P3,Z0,N2>;
         units {
-            @mu: 1.0E0; "m^3/s^2" "meter^3 per second^2", "meters^3 per seconds^2";
+            @mu: 1.0E0; "m^3/s^2", "meter^3 per second^2", "meters^3 per seconds^2";
         }
     }
 }
@@ -49,7 +51,7 @@ mod square_kilometer_per_second_squared{
         dimension: Q<P2,N2>;
         units {
             @meter_squared_per_second_squared: 1.0E0; "m^2/s^2","meter^2 per second^2", "meters^2 per second^2";
-            @kilometer_squared_per_second_squared: 1.0E6; "km^2/s^2","kilometer^2 per second^2", "kilometers^2 per second"^2;
+            @kilometer_squared_per_second_squared: 1.0E6; "km^2/s^2","kilometer^2 per second^2", "kilometers^2 per second^2";
         }
     }
 }
@@ -61,7 +63,7 @@ mod cycle_per_day_squared{
         dimension: Q<Z0,N2>;
         units {
             @revolutions_per_second_squared: 1.0E0; "1/s^2","cycle per second^2", "cycles per second^2";
-            @revolutions_per_day_squared: 7.46496E9; "1/day^2","day per second^2", "days per second"^2;
+            @revolutions_per_day_squared: 7.46496E9; "1/day^2","day per second^2", "days per second^2";
         }
     }
 }
@@ -88,8 +90,8 @@ struct CommonMetaData{
     comment: Comment,
     object_name: str,
     object_id: str,
-    center_name: constants::NaturalBody,
-    ref_frame: constants::ReferenceFrame,
+    center_name: NaturalBody,
+    ref_frame: ReferenceFrame,
     ref_frame_epoch: DateTime<Utc>,
     time_system: constants::TimeSystem
 }
