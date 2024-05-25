@@ -19,3 +19,7 @@ pub(crate) enum NaturalBody {}
 pub(crate) enum LocalReferenceFrame{
     RSW, RTN, TNW
 }
+
+pub(crate) enum InterpolationType{
+    Hermite,Linear,Lagrange
+}
