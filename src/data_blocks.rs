@@ -15,7 +15,7 @@ use uom::si::{
     time::second,
     velocity::kilometer_per_second};
 use uom::si::acceleration::kilometer_per_second_squared;
-use constants::{InterpolationType, LocalReferenceFrame};
+use constants::{Classification, EphemerisType, InterpolationType, LocalReferenceFrame};
 use crate::common::{Comment, UTCTime};
 
 #[macro_use]
@@ -134,15 +134,15 @@ pub(crate) struct ManeuverParameters{
     man_duration:second,
     man_delta_mass:kilogram,
     man_reference_frame:LocalReferenceFrame,
-    man_dv1:kilometer_per_second,
+    man_dv1: kilometer_per_second,
     man_dv2: kilometer_per_second,
     man_dv3: kilometer_per_second
 }
 
 pub(crate) struct TLEParameters{
     comment:Comment,
-    ephemeris_type: Option<i8>,
-    classification_type: Option<str>,
+    ephemeris_type: EphemerisType,
+    classification_type: Classification,
     norad_cat_id: Option<i32>,
     element_set_no: Option<i32>,
     rev_at_epoch: Option<f32>,
@@ -162,13 +162,18 @@ struct AccelVector{
     z_ddot: kilometer_per_second_squared
 }
 
-pub struct OEMEphemeris{
+pub(crate) struct OEMEphemeris{
     cartesians:ExtendedStateVector,
     covariance:Option<PosVelCovariance>,
     covariance_epoch: UTCTime
 }
 
-pub struct InterpolationInfo{
+pub(crate) struct InterpolationInfo{
     interpolation:InterpolationType,
     interpolation_degree: i32,
+}
+
+pub(crate) struct NextLeapInfo{
+    next_leap_epoch:UTCTime,
+    next_leap_taimutc:second
 }

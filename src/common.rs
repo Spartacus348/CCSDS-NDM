@@ -1,5 +1,5 @@
 use chrono::{DateTime, Utc};
-use constants::{NaturalBody, ReferenceFrame, TimeSystem};
+use constants::{Classification, NaturalBody, ReferenceFrame, TimeSystem};
 
 
 pub type Comment = Option<[str]>;
@@ -8,7 +8,7 @@ pub type UTCTime = DateTime<Utc>;
 pub struct Header{
     ccsds_opm_vers: str,
     comment: Comment,
-    classification: Option<str>,
+    classification: Classification,
     creation_date: UTCTime,
     originator: str,
     message_id: Option<str>
