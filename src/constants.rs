@@ -47,3 +47,7 @@ pub(crate) const EPHEMERIS_TYPE_KEY: HashMap<i8,EphemerisType> = HashMap::from([
     (4,EphemerisType::SGP4_XP),
     (6,EphemerisType::Special_Perturbations)
 ]);
+
+pub(crate) enum TrajectoryBasis{
+    Predicted, Determined, Telemetry, Simulated, Other, FreeForm(str)
+}

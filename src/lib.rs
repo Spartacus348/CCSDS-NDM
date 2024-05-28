@@ -124,5 +124,10 @@ struct OCMMetaData{
 }
 
 struct OCMData{
-
+    orbit_data:Option<[OrbitData]>,
+    physical_properties:Option<PhysicalProperties>,
+    covariance: Option<[PosVelCovariance]>,
+    maneuver_parameters: Option<[ManeuverParameters]>,
+    od_section:Option<ODSection>,
+    user_defined_parameters: Option<Map<str,str>>
 }
