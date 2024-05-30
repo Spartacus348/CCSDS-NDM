@@ -3,9 +3,10 @@ holds certain constants, like valid reference frames
  */
 
 use std::collections::HashMap;
+use common::UTCTime;
 
 pub(crate) enum TimeSystem {
-    GMST, GPS, MET, MRT,
+    GMST, GPS, MET(UTCTime), MRT(UTCTime),
     SCLK, TAI, TCB, TDB,
     TCG, TT, UT1, UTC,
     OTHER(str)

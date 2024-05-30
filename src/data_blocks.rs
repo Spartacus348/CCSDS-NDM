@@ -1,7 +1,7 @@
 /*
 Holds the data sections
  */
-
+use std::iter::Map;
 use chrono::{DateTime, Utc};
 use uom::si::{
     angle::degree,
@@ -15,7 +15,7 @@ use uom::si::{
     time::second,
     velocity::kilometer_per_second};
 use uom::si::acceleration::kilometer_per_second_squared;
-use constants::{Classification, EphemerisType, InterpolationType, LocalReferenceFrame, NaturalBody, ReferenceFrame, TrajectoryBasis};
+use constants::{Classification, EphemerisType, InterpolationType, LocalReferenceFrame};
 use crate::common::{Comment, UTCTime};
 
 #[macro_use]
@@ -162,11 +162,6 @@ struct AccelVector{
     z_ddot: kilometer_per_second_squared
 }
 
-pub(crate) struct OEMEphemeris{
-    cartesians:ExtendedStateVector,
-    covariance:Option<PosVelCovariance>,
-    covariance_epoch: UTCTime
-}
 
 pub(crate) struct InterpolationInfo{
     interpolation:InterpolationType,
@@ -178,29 +173,6 @@ pub(crate) struct NextLeapInfo{
     next_leap_taimutc:second
 }
 
-pub(crate) struct ODSection {
-    perturbations:OrbitPerturbations,
-    orbit_determination: OrbitDetermination
-}
-
-pub(crate) struct TrajectoryStateTimeHistory {
-    comments: Comment,
-    traj_id: Option<str>,
-    traj_prev_id: Option<str>,
-    traj_next_id: Option<str>,
-    traj_basis: Option<TrajectoryBasis>,
-    traj_basis_id: Option<str>,
-    interpolation: Option<InterpolationInfo>,
-    propagator:Option<str>,
-    center_name: NaturalBody,
-    traj_ref_frame: ReferenceFrame,
-    traj_frame_epoch: Option<UTCTime>,
-    useable_start_time: Option<UTCTime>,
-    useable_stop_type: Option<UTCTime>,
-    orb_revnum:Option<i32>,
-    orb_revnum_basis: Option<f32>,
-    traj_type: TrajectoryType,
-    orb_averaging: Option<OrbAvMethod>,
-    traj_units: Option<[str]>,
-    trajectory_block:TrajectoryBlock
+pub(crate) struct UserParameters{
+    params: Map<String,String>
 }
