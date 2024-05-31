@@ -5,3 +5,4 @@ authors= ["Gabe gnmcd13485@gmail.com"]
 [dependencies]
 chrono = "0.4.38"
 uom="0.36.0"
+xml="0.8.16"
