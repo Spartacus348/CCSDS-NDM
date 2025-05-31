@@ -1,27 +1,13 @@
 /*
 Holds the data sections
  */
-use chrono::{DateTime, Utc};
-use serde_derive::{Deserialize, Serialize};
-use std::iter::Map;
-use uom::si::{
-    acceleration::kilometer_per_second_squared,
-    angle::degree,
-    area::{square_kilometer, square_meter},
-    length::kilometer,
-    mass::kilogram,
-    specific_area::square_meter_per_kilogram,
-    time::second,
-    velocity::kilometer_per_second,
-};
-
 use common::{Comment, UTCTime};
 use constants::{Classification, EphemerisType, InterpolationType, LocalReferenceFrame};
-use unit::{
-    area_rate::kilometer_squared_per_second,
-    gm::cubic_kilometers_per_second_square,
-    si_eu::{angular_acceleration::cycles_per_day_squared, angular_jerk::cycles_per_day_cubed},
-    velocity_squared::kilometer_squared_per_second_squared,
+use serde_derive::{Deserialize, Serialize};
+use unit::gm::cubic_kilometers_per_second_square;
+use uom::si::f32::{
+    Acceleration, Angle, AngularAcceleration, AngularJerk, Area, AvailableEnergy,
+    DiffusionCoefficient, Length, Mass, SpecificArea, Time, Velocity,
 };
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -29,25 +15,25 @@ use unit::{
 pub(crate) struct StateVector {
     comment: Comment,
     epoch: UTCTime,
-    x: kilometer,
-    y: kilometer,
-    z: kilometer,
-    x_dot: kilometer_per_second,
-    y_dot: kilometer_per_second,
-    z_dot: kilometer_per_second,
+    x: Length,
+    y: Length,
+    z: Length,
+    x_dot: Velocity,
+    y_dot: Velocity,
+    z_dot: Velocity,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub(crate) struct KeplerianElements {
     comment: Comment,
-    semi_major_axis: kilometer,
+    semi_major_axis: Length,
     eccentricity: f32,
-    inclination: degree,
-    ra_of_asc_node: degree,
-    arg_of_pericenter: degree,
-    true_anomaly: Option<degree>,
-    mean_anomaly: Option<degree>,
+    inclination: Angle,
+    ra_of_asc_node: Angle,
+    arg_of_pericenter: Angle,
+    true_anomaly: Option<Angle>,
+    mean_anomaly: Option<Angle>,
     gm: Option<cubic_kilometers_per_second_square>,
 }
 
@@ -55,10 +41,10 @@ pub(crate) struct KeplerianElements {
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub(crate) struct SpacecraftParameters {
     comment: Comment,
-    mass: kilogram,
-    solar_rad_area: Option<square_meter>,
+    mass: Mass,
+    solar_rad_area: Option<Area>,
     solar_rad_coff: Option<f32>,
-    drag_area: Option<square_meter>,
+    drag_area: Option<Area>,
     drag_coeff: Option<f32>,
 }
 
@@ -67,40 +53,40 @@ pub(crate) struct SpacecraftParameters {
 pub(crate) struct PosVelCovariance {
     comment: Comment,
     cov_reference_frame: LocalReferenceFrame,
-    cx_x: square_kilometer,
-    cy_x: square_kilometer,
-    cy_y: square_kilometer,
-    cz_x: square_kilometer,
-    cz_y: square_kilometer,
-    cz_z: square_kilometer,
-    cx_dot_x: kilometer_squared_per_second,
-    cx_dot_y: kilometer_squared_per_second,
-    cx_dot_z: kilometer_squared_per_second,
-    cx_dot_x_dot: kilometer_squared_per_second_squared,
-    cy_dot_x: kilometer_squared_per_second,
-    cy_dot_y: kilometer_squared_per_second,
-    cy_dot_z: kilometer_squared_per_second,
-    cy_dot_x_dot: kilometer_squared_per_second_squared,
-    cy_dot_y_dot: kilometer_squared_per_second_squared,
-    cz_dot_x: kilometer_squared_per_second,
-    cz_dot_y: kilometer_squared_per_second,
-    cz_dot_z: kilometer_squared_per_second,
-    cz_dot_x_dot: kilometer_squared_per_second_squared,
-    cz_dot_y_dot: kilometer_squared_per_second_squared,
-    cz_dot_z_dot: kilometer_squared_per_second_squared,
+    cx_x: Area,
+    cy_x: Area,
+    cy_y: Area,
+    cz_x: Area,
+    cz_y: Area,
+    cz_z: Area,
+    cx_dot_x: DiffusionCoefficient,
+    cx_dot_y: DiffusionCoefficient,
+    cx_dot_z: DiffusionCoefficient,
+    cx_dot_x_dot: AvailableEnergy,
+    cy_dot_x: DiffusionCoefficient,
+    cy_dot_y: DiffusionCoefficient,
+    cy_dot_z: DiffusionCoefficient,
+    cy_dot_x_dot: AvailableEnergy,
+    cy_dot_y_dot: AvailableEnergy,
+    cz_dot_x: DiffusionCoefficient,
+    cz_dot_y: DiffusionCoefficient,
+    cz_dot_z: DiffusionCoefficient,
+    cz_dot_x_dot: AvailableEnergy,
+    cz_dot_y_dot: AvailableEnergy,
+    cz_dot_z_dot: AvailableEnergy,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub(crate) struct ManeuverParameters {
     comment: Comment,
-    man_epoch_ignition: DateTime<Utc>,
-    man_duration: second,
-    man_delta_mass: kilogram,
+    man_epoch_ignition: UTCTime,
+    man_duration: Time,
+    man_delta_mass: Mass,
     man_reference_frame: LocalReferenceFrame,
-    man_dv1: kilometer_per_second,
-    man_dv2: kilometer_per_second,
-    man_dv3: kilometer_per_second,
+    man_dv1: Velocity,
+    man_dv2: Velocity,
+    man_dv3: Velocity,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -112,10 +98,10 @@ pub(crate) struct TLEParameters {
     norad_cat_id: Option<i32>,
     element_set_no: Option<i32>,
     rev_at_epoch: Option<f32>,
-    bterm: square_meter_per_kilogram,
-    mean_motion_dot: cycles_per_day_squared,
-    mean_motion_ddot: Option<cycles_per_day_cubed>,
-    agom: square_meter_per_kilogram,
+    bterm: SpecificArea,
+    mean_motion_dot: AngularAcceleration,
+    mean_motion_ddot: Option<AngularJerk>,
+    agom: SpecificArea,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -128,9 +114,9 @@ pub(crate) struct ExtendedStateVector {
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 struct AccelVector {
-    x_ddot: kilometer_per_second_squared,
-    y_ddot: kilometer_per_second_squared,
-    z_ddot: kilometer_per_second_squared,
+    x_ddot: Acceleration,
+    y_ddot: Acceleration,
+    z_ddot: Acceleration,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -144,11 +130,11 @@ pub(crate) struct InterpolationInfo {
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub(crate) struct NextLeapInfo {
     next_leap_epoch: UTCTime,
-    next_leap_taimutc: second,
+    next_leap_taimutc: Time,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub(crate) struct UserParameters {
-    params: Map<String, String>,
+    //params: Map<String, String>,
 }

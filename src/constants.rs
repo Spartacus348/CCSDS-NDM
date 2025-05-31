@@ -52,6 +52,7 @@ pub(crate) enum NaturalBody {
     OTHER(String),
 }
 
+#[derive(Debug, Serialize, Deserialize)]
 pub(crate) enum LocalReferenceFrame {
     RSW,
     RTN,
@@ -59,6 +60,7 @@ pub(crate) enum LocalReferenceFrame {
     Other(String),
 }
 
+#[derive(Debug, Serialize, Deserialize)]
 pub(crate) enum InterpolationType {
     Hermite,
     Linear,
