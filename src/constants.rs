@@ -2,53 +2,94 @@
 holds certain constants, like valid reference frames
  */
 
-use std::collections::HashMap;
 use common::UTCTime;
+use serde_derive::{Deserialize, Serialize};
+use std::collections::HashMap;
 
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub(crate) enum TimeSystem {
-    GMST, GPS, MET(UTCTime), MRT(UTCTime),
-    SCLK, TAI, TCB, TDB,
-    TCG, TT, UT1, UTC,
-    OTHER(str)
+    GMST,
+    GPS,
+    MET(UTCTime),
+    MRT(UTCTime),
+    SCLK,
+    TAI,
+    TCB,
+    TDB,
+    TCG,
+    TT,
+    UT1,
+    UTC,
+    OTHER(String),
 }
 
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub(crate) enum ReferenceFrame {
-    EME2000, GCRF, GRC, ICRF,
-    ITRF2000, ITRF93, ITRF97,
-    MCI, TDR, TEME, TOD,
-    OTHER(str)
+    EME2000,
+    GCRF,
+    GRC,
+    ICRF,
+    ITRF2000,
+    ITRF93,
+    ITRF97,
+    MCI,
+    TDR,
+    TEME,
+    TOD,
+    OTHER(String),
 }
 
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub(crate) enum NaturalBody {
-    EARTH, MOON, SUN, EarthMoonBarycenter,
-    SunJupyterBarycenter, OTHER(str)
+    EARTH,
+    MOON,
+    SUN,
+    EarthMoonBarycenter,
+    SunJupyterBarycenter,
+    OTHER(String),
 }
 
-pub(crate) enum LocalReferenceFrame{
-    RSW, RTN, TNW, Other(str)
+pub(crate) enum LocalReferenceFrame {
+    RSW,
+    RTN,
+    TNW,
+    Other(String),
 }
 
-pub(crate) enum InterpolationType{
-    Hermite,Linear,Lagrange,Other(str)
+pub(crate) enum InterpolationType {
+    Hermite,
+    Linear,
+    Lagrange,
+    Other(String),
 }
 
-pub(crate) enum Classification{
-    U, S, Other(str)
+#[derive(Debug, Serialize, Deserialize)]
+pub(crate) enum Classification {
+    U,
+    S,
+    Other(String),
 }
 
-pub(crate) enum EphemerisType{
-    SGP, SGP4, PPT3, SGP4_XP, Special_Perturbations,
-    OtherStr(str), OtherInt(i8)
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+pub(crate) enum EphemerisType {
+    SGP,
+    SGP4,
+    PPT3,
+    SGP4XP,
+    SpecialPerturbations,
+    OtherStr(String),
+    OtherInt(i8),
 }
 
-pub(crate) const EPHEMERIS_TYPE_KEY: HashMap<i8,EphemerisType> = HashMap::from([
-    (0,EphemerisType::SGP),
-    (2,EphemerisType::SGP4),
-    (3,EphemerisType::PPT3),
-    (4,EphemerisType::SGP4_XP),
-    (6,EphemerisType::Special_Perturbations)
-]);
-
-pub(crate) enum TrajectoryBasis{
-    Predicted, Determined, Telemetry, Simulated, Other, FreeForm(str)
+pub(crate) enum TrajectoryBasis {
+    Predicted,
+    Determined,
+    Telemetry,
+    Simulated,
+    Other,
+    FreeForm(String),
 }

@@ -3,25 +3,26 @@ Holds the OMM object
  */
 
 use common::{Comment, CommonMetaData, Header};
-use data_blocks::{KeplerianElements, PosVelCovariance, SpacecraftParameters,
-                  TLEParameters, UserParameters};
+use data_blocks::{
+    KeplerianElements, PosVelCovariance, SpacecraftParameters, TLEParameters, UserParameters,
+};
 
-struct OMM{
+struct OMM {
     header: Header,
     metadata: OMMMetaData,
-    data:OMMData,
-    comment:Comment
+    data: OMMData,
+    comment: Comment,
 }
 
-struct OMMMetaData{
+struct OMMMetaData {
     common_meta_data: CommonMetaData,
-    mean_element_theory:str
+    mean_element_theory: String,
 }
 
-struct OMMData{
-    mean_keplerian_elements:KeplerianElements,
+struct OMMData {
+    mean_keplerian_elements: KeplerianElements,
     spacecraft_parameters: Option<SpacecraftParameters>,
     tle_related_parameters: Option<TLEParameters>,
     pos_vel_covariance: Option<PosVelCovariance>,
-    user_defined_parameters: Option<UserParameters>
+    user_defined_parameters: Option<UserParameters>,
 }
