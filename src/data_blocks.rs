@@ -2,7 +2,6 @@
 Holds the data sections
  */
 use chrono::{DateTime, Utc};
-use serde_derive::{Deserialize, Serialize};
 use std::iter::Map;
 use uom::si::{
     acceleration::kilometer_per_second_squared,
@@ -24,8 +23,7 @@ use unit::{
     velocity_squared::kilometer_squared_per_second_squared,
 };
 
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+#[derive(Debug)]
 pub(crate) struct StateVector {
     comment: Comment,
     epoch: UTCTime,
@@ -37,8 +35,7 @@ pub(crate) struct StateVector {
     z_dot: kilometer_per_second,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+#[derive(Debug)]
 pub(crate) struct KeplerianElements {
     comment: Comment,
     semi_major_axis: kilometer,
@@ -51,8 +48,7 @@ pub(crate) struct KeplerianElements {
     gm: Option<cubic_kilometers_per_second_square>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+#[derive(Debug)]
 pub(crate) struct SpacecraftParameters {
     comment: Comment,
     mass: kilogram,
@@ -62,8 +58,7 @@ pub(crate) struct SpacecraftParameters {
     drag_coeff: Option<f32>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+#[derive(Debug)]
 pub(crate) struct PosVelCovariance {
     comment: Comment,
     cov_reference_frame: LocalReferenceFrame,
@@ -90,8 +85,7 @@ pub(crate) struct PosVelCovariance {
     cz_dot_z_dot: kilometer_squared_per_second_squared,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+#[derive(Debug)]
 pub(crate) struct ManeuverParameters {
     comment: Comment,
     man_epoch_ignition: DateTime<Utc>,
@@ -103,8 +97,7 @@ pub(crate) struct ManeuverParameters {
     man_dv3: kilometer_per_second,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+#[derive(Debug)]
 pub(crate) struct TLEParameters {
     comment: Comment,
     ephemeris_type: EphemerisType,
@@ -118,37 +111,32 @@ pub(crate) struct TLEParameters {
     agom: square_meter_per_kilogram,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+#[derive(Debug)]
 pub(crate) struct ExtendedStateVector {
     state_vector: StateVector,
     accel_block: Option<AccelVector>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+#[derive(Debug)]
 struct AccelVector {
     x_ddot: kilometer_per_second_squared,
     y_ddot: kilometer_per_second_squared,
     z_ddot: kilometer_per_second_squared,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+#[derive(Debug)]
 pub(crate) struct InterpolationInfo {
     interpolation: InterpolationType,
     interpolation_degree: i32,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+#[derive(Debug)]
 pub(crate) struct NextLeapInfo {
     next_leap_epoch: UTCTime,
     next_leap_taimutc: second,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+#[derive(Debug)]
 pub(crate) struct UserParameters {
     params: Map<String, String>,
 }

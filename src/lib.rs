@@ -12,3 +12,4 @@ mod constants;
 mod data_blocks;
 mod odm;
 mod unit;
+mod docs;

@@ -6,10 +6,9 @@ use data_blocks::{
     KeplerianElements, ManeuverParameters, PosVelCovariance, SpacecraftParameters, StateVector,
     UserParameters,
 };
-use serde_derive::{Deserialize, Serialize};
+use docs;
 
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+#[derive(Debug)]
 pub struct OPM {
     header: Header,
     metadata: CommonMetaData,
@@ -17,8 +16,7 @@ pub struct OPM {
     comment: Comment,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+#[derive(Debug)]
 pub struct OPMData {
     state_vector_components: StateVector,
     osculating_keplerian_elements: Option<KeplerianElements>,
@@ -26,4 +24,10 @@ pub struct OPMData {
     pos_vel_covariance: Option<PosVelCovariance>,
     maneuver_parameters: Option<Vec<ManeuverParameters>>,
     user_defined_parameters: Option<UserParameters>,
+}
+
+impl OPM{
+    pub fn new(source: docs::opm::OPM) -> Self {
+        todo!()
+    }
 }
